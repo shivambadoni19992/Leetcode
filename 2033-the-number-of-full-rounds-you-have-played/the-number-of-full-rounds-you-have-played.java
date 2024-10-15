@@ -1,10 +1,8 @@
 class Solution {
 
-    public int convertToMinutes(String a, String b) {
-        int num1 = Integer.parseInt(a);
-        int num2 = Integer.parseInt(b);
-        System.out.println(num1);
-        return num1 * 60 + num2;
+    public int convertToMinutes(String arr) {
+        return Integer.parseInt(arr.substring(0, 2)) * 60
+            + Integer.parseInt(arr.substring(3, 5));
     }
 
     public int numberOfRounds(String loginTime, String logoutTime) {
@@ -13,10 +11,8 @@ class Solution {
         // 1> 38 rem=1
         // 2> 40
         // int a = String.atoi()[0]);
-        String arr1[] = loginTime.split(":");
-        String arr2[] = logoutTime.split(":");
-        int a = convertToMinutes(arr1[0], arr1[1]);
-        int b = convertToMinutes(arr2[0], arr2[1]);
+        int a = convertToMinutes(loginTime);
+        int b = convertToMinutes(logoutTime);
         if (b < a) {
             b = b + (24 * 60);
         }
