@@ -1,8 +1,8 @@
 class Solution {
 
     public int convertToMinutes(String a, String b) {
-        int num1 = (a.charAt(0) - '0') * 10 + a.charAt(1) - '0';
-        int num2 = (b.charAt(0) - '0') * 10 + b.charAt(1) - '0';
+        int num1 = Integer.parseInt(a);
+        int num2 = Integer.parseInt(b);
         System.out.println(num1);
         return num1 * 60 + num2;
     }
