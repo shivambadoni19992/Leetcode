@@ -18,11 +18,13 @@ class Solution {
                 if (text1.charAt(i) == text2.charAt(j)) {
                     dp[i][j] = 1 + dp[i + 1][j + 1];
                 }
-                else{
-                    dp[i][j]=Math.max(dp[i + 1][j], dp[i][j + 1]);
-                }
+                // System.out.println(dp[i][j]);
+                int left = dp[i + 1][j];
+                int right = dp[i][j + 1];
+                dp[i][j] = Math.max(dp[i][j], Math.max(left, right));
             }
         }
         return dp[0][0];
+        // return findlongest(text1,text2,0,0);
     }
 }
