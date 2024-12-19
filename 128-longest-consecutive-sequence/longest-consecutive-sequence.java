@@ -9,11 +9,9 @@ class Solution {
             
             if(map.containsKey(nums[i]-1)) {
                 map.put(nums[i],map.get(nums[i]-1) + map.get(nums[i]));
-                // map.put(nums[i-1],map.get(nums[i]));
             }
             if(map.containsKey(nums[i]+1)){
                 map.put(nums[i],map.get(nums[i]+1) + map.get(nums[i]));
-                // map.put(nums[i]+1,map.get(nums[i]));
             }
             if(map.containsKey(nums[i]-1)) {
                 map.put(nums[i] - map.get(nums[i]-1),map.get(nums[i]));
