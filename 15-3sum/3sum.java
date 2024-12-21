@@ -7,13 +7,9 @@ class Solution {
         for (int i = 0; i < nums.length; i++) {
             int j = i + 1, k = nums.length - 1;
             while (j < k) {
-                List<Integer> triplet = new ArrayList<>();
                 int sum = nums[j] + nums[i] + nums[k];
                 if (sum == 0) {
-                    triplet.add(nums[i]);
-                    triplet.add(nums[j]);
-                    triplet.add(nums[k]);
-                    s.add(triplet);
+                    s.add(Arrays.asList(nums[i],nums[j],nums[k]));
                 }
                 if (sum <= 0) j++; else k--;
             }
