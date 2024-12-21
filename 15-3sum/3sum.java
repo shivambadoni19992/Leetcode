@@ -10,7 +10,10 @@ class Solution {
                 List<Integer> triplet = new ArrayList<>();
                 int sum = nums[j] + nums[i] + nums[k];
                 if (sum == 0) {
-                    s.add(Arrays.asList(nums[i],nums[j],nums[k]));
+                    triplet.add(nums[i]);
+                    triplet.add(nums[j]);
+                    triplet.add(nums[k]);
+                    s.add(triplet);
                 }
                 if (sum <= 0) j++; else k--;
             }
