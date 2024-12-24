@@ -19,7 +19,6 @@ class Solution {
         int [][] res = new int[arr.size()][2];
         int c = 0;
         for(int []a : arr){
-            System.out.println(a[0]+" "+a[1]);
             res[c][0] = a[0];
             res[c][1] = a[1];
             c++;
