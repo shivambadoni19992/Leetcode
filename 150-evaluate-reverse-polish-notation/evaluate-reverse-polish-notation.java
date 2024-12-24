@@ -45,7 +45,7 @@ class Solution {
                     stack.push(sum);
                     break;
                 default:
-                    stack.push(convert(ch));
+                    stack.push(Integer.parseInt(ch));
             }
         }
         return stack.pop();
