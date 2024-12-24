@@ -16,10 +16,10 @@ class Solution {
     public int evalRPN(String[] tokens) {
         Stack <Integer> stack = new Stack();
         for(int i=0;i<tokens.length;i++){
-            String ch = "";
-            ch += tokens[i];
+            // String ch = "";
+            // ch += tokens[i];
             int a,b,sum;
-            switch(ch){
+            switch(tokens[i]){
                 case "+":
                     a = stack.pop();
                     b = stack.pop();
@@ -45,7 +45,7 @@ class Solution {
                     stack.push(sum);
                     break;
                 default:
-                    stack.push(Integer.parseInt(ch));
+                    stack.push(Integer.parseInt(tokens[i]));
             }
         }
         return stack.pop();
