@@ -4,11 +4,12 @@ class Solution {
         Stack<Integer> st = new Stack();
         HashMap<Integer, Integer> nextGreaterElement = new HashMap<>();
         for (int i = 0; i < nums2.length; i++) {
-            nextGreaterElement.put(nums2[i],-1);
-            while(!st.isEmpty() && st.peek() < nums2[i]){
-                nextGreaterElement.put(st.pop(),nums2[i]);
+            int a = nums2[i];
+            nextGreaterElement.put(a,-1);
+            while(!st.isEmpty() && st.peek() < a){
+                nextGreaterElement.put(st.pop(),a);
             }
-            st.add(nums2[i]);
+            st.add(a);
         }
         for(int i=0;i<nums1.length;i++){
             nums1[i] = nextGreaterElement.get(nums1[i]);
