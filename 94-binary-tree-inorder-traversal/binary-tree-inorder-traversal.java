@@ -15,12 +15,14 @@
  */
 class Solution {
     List<Integer> list = new ArrayList<>();
-    public void findInorder(TreeNode root){
-        if(root == null) return;
+
+    public void findInorder(TreeNode root) {
+        if (root == null) return;
         findInorder(root.left);
         list.add(root.val);
         findInorder(root.right);
     }
+
     public List<Integer> inorderTraversal(TreeNode root) {
         findInorder(root);
         return list;
