@@ -18,10 +18,8 @@ class Solution {
 
     public boolean findTarget(TreeNode root, int k) {
         if (root == null) return false;
-        boolean left = findTarget(root.left, k);
         if (set.contains(k - root.val)) return true;
         set.add(root.val);
-        boolean right = findTarget(root.right, k);
-        return left || right;
+        return findTarget(root.left, k) || findTarget(root.right, k);
     }
 }
