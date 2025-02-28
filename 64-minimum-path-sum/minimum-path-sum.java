@@ -15,8 +15,8 @@ class Solution {
         }
         for(int i=1;i<n;i++){
             for(int j=1;j<m;j++){
-                int max = Math.min(dp[i-1][j]+ grid[i][j],dp[i][j-1]+grid[i][j]);
-                dp[i][j] = max;
+                int min = Math.min(dp[i-1][j]+ grid[i][j],dp[i][j-1]+grid[i][j]);
+                dp[i][j] = min;
             }
         }
         return dp[n-1][m-1];
