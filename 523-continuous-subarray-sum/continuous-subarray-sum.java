@@ -15,7 +15,6 @@ class Solution {
                 continue;
             }
             
-            System.out.println(mod);
             map.put(mod,i);
         }
         return false;
