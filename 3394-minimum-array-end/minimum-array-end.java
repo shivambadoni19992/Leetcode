@@ -14,7 +14,6 @@ class Solution {
                 if((temp1&1)==1){
                     ans = ans | left_shift;
                 }
-                
                 temp1 = temp1 >> 1;
             }
             temp = temp >> 1;
