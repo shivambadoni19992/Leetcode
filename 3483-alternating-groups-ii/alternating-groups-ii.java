@@ -9,7 +9,6 @@ class Solution {
             }
             res += (count >= k) ? 1 : 0;
         }
-        
         return res;
     }
 }
