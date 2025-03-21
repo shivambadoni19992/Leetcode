@@ -19,13 +19,13 @@ class Solution {
         }
         for (int i = 0; i < suppliesList.size(); i++) {
             String supply = suppliesList.get(i);
-            if (adjacenyList.containsKey(supply)) {
+            if(adjacenyList.containsKey(supply)){
                 List<String> recipe = adjacenyList.get(supply);
                 for (int j = 0; j < recipe.size(); j++) {
                     String ele = recipe.get(j);
                     int inDeg = inDegree.get(ele) - 1;
-                    inDegree.put(ele, inDeg);
-                    if (inDeg == 0) {
+                    inDegree.put(ele,inDeg);
+                    if(inDeg == 0){
                         output.add(ele);
                         suppliesList.add(ele);
                     }
