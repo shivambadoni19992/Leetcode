@@ -7,7 +7,7 @@ class Pair {
     }
 }
 
-class Count implements Comparable<Count> {
+class Count {
     int count;
     Pair pair;
 
@@ -16,10 +16,6 @@ class Count implements Comparable<Count> {
         this.pair = pair;
     }
 
-    @Override
-    public int compareTo(Count other) {
-        return Integer.compare(this.count, other.count);
-    }
 }
 
 class Solution {
@@ -27,7 +23,12 @@ class Solution {
     public int minimumObstacles(int[][] grid) {
         int n = grid.length;
         int m = grid[0].length;
-        PriorityQueue<Count> minPQ = new PriorityQueue<>();
+        PriorityQueue<Count> minPQ = new PriorityQueue<>(new Comparator<Count>() {
+            @Override
+            public int compare(Count c1, Count c2) {
+                return Integer.compare(c1.count, c2.count);
+            }
+        });
         boolean[][] visited = new boolean[n][m];
         Pair check = new Pair(0, 0);
         Count inp = new Count(grid[0][0], check);
