@@ -37,7 +37,7 @@ class Solution {
             Count c = minPQ.poll();
             Pair border = c.pair;
             if (border.a == n - 1 && border.b == m - 1) {
-                return c.count; // Reached the bottom-right cell
+                return c.count;
             }
             if (visited[border.a][border.b]) continue;
             visited[border.a][border.b] = true;
