@@ -26,7 +26,6 @@ class Solution {
                 leftCount++;
                 totalCount--;
             }
-            System.out.println(totalCount + " " + leftCount);
             if (((leftCount * 2) > (i + 1)) && (totalCount * 2) > (n - i - 1)) return i;
         }
         return -1;
