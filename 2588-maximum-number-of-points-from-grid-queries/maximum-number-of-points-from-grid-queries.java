@@ -29,9 +29,9 @@ class Solution {
         visited[0][0] = 1;
         int count = 0;
 
-        for (int[] q : indexedQueries) {
-            int queryValue = q[0];
-            int queryIndex = q[1];
+        for (int[] query : indexedQueries) {
+            int queryValue = query[0];
+            int queryIndex = query[1];
 
             while (!queue.isEmpty() && grid[queue.peek().a][queue.peek().b] < queryValue) {
                 Pair p = queue.poll();
