@@ -6,7 +6,7 @@ class Solution {
         for (int i = 0; i < s.length(); i++) {
             lastIndex.put(s.charAt(i), i);
         }
-        int partionEnd = lastIndex.get(s.charAt(0));
+        int partionEnd = 0;
         int count = 0;
         for (int i = 0; i < s.length(); i++) {
             partionEnd = Math.max(partionEnd, lastIndex.get(s.charAt(i)));
