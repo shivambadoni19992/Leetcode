@@ -4,11 +4,12 @@ class Solution {
         Set<Character> count = new HashSet<>();
         int subCount = 1;
         for (int i = 0; i < s.length(); i++) {
-            if (count.contains(s.charAt(i))) {
+            char ch = s.charAt(i);
+            if (count.contains(ch)) {
                 subCount++;
                 count.clear();
             }
-            count.add(s.charAt(i));
+            count.add(ch);
         }
         return subCount;
     }
