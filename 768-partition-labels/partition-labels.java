@@ -9,8 +9,6 @@ class Solution {
         int partionEnd = lastIndex.get(s.charAt(0));
         int count = 0;
         for (int i = 0; i < s.length(); i++) {
-            
-            
             partionEnd = Math.max(partionEnd, lastIndex.get(s.charAt(i)));
             if (partionEnd == i) {
                 int idx = (i + 1) - count;
