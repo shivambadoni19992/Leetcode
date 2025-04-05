@@ -1,11 +1,14 @@
 class Solution {
+
     public int missingNumber(int[] nums) {
-        int total_xor = 0;
-        int array_xor = 0;
-        for(int i = 1; i <= nums.length; i++){
-            total_xor = total_xor ^ i;
-            array_xor =  array_xor ^ nums[i-1]; 
+        for (int i = 0; i < nums.length; i++) {
+            int pos = nums[i] == Integer.MIN_VALUE ? 0 : Math.abs(nums[i]);
+            if (pos == nums.length) continue;
+            nums[pos] = nums[pos] == 0 ? Integer.MIN_VALUE : nums[pos] * -1;
         }
-        return total_xor ^ array_xor;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] >= 0) return i;
+        }
+        return nums.length;
     }
 }
