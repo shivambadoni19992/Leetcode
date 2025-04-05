@@ -6,10 +6,11 @@ class Solution {
         int max = 1;
         int i = 0;
         for (int j = 0; j < s.length(); j++) {
-            if (map.containsKey(s.charAt(j)) && map.get(s.charAt(j)) >= i) {
-                i = map.get(s.charAt(j)) + 1;
+            char ch = s.charAt(j);
+            if (map.containsKey(ch) && map.get(ch) >= i) {
+                i = map.get(ch) + 1;
             }
-            map.put(s.charAt(j),j);
+            map.put(ch,j);
             max = Math.max(max, j - i + 1);
         }
         return max;
