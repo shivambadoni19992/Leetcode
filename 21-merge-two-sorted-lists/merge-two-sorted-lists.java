@@ -24,12 +24,7 @@ class Solution {
                 list2 = list2.next;
             }
         }
-        if (list1 != null) {
-            temp.next = list1;
-        }
-        if (list2 != null) {
-            temp.next = list2;
-        }
+        temp.next = (list1 == null) ? list2 : list1;
         return ans.next;
     }
 }
