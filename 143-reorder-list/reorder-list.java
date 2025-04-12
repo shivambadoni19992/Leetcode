@@ -28,7 +28,6 @@ class Solution {
             slow = slow.next;
             fast = fast.next.next;
         }
-
         ListNode reverse = reverseList(slow.next);
         slow.next = null;
         ListNode temp = head;
@@ -36,10 +35,8 @@ class Solution {
         while (reverse != null) {
             ListNode tmp1 = temp.next;
             ListNode tmp2 = reverse.next;
-
             temp.next = reverse;
             reverse.next = tmp1;
-
             temp = tmp1;
             reverse = tmp2;
         }
