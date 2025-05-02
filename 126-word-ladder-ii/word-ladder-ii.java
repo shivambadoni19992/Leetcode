@@ -1,74 +1,67 @@
 class Solution {
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
-        HashMap<String, Integer> hm = new HashMap<>();
-
-        Queue<Pair> q = new ArrayDeque<>();
-        q.add(new Pair(beginWord, 1));
-
-        HashSet<String> visited = new HashSet<>();
-        visited.add(beginWord);
-
-        while (!q.isEmpty()) {
-            Pair rem = q.remove();
-            String word = rem.word;
-            int steps = rem.steps;
-            hm.put(word, steps);
-
-            if (endWord.equals(word)) break;
-
-            for (String trav : wordList) {
-                if (!visited.contains(trav) && isDiffOne(word, trav)) {
-                    visited.add(trav);
-                    q.add(new Pair(trav, steps + 1));
+        List<List<String>> ans = new ArrayList<>(); 
+        Map<String, Set<String>> reverse = new HashMap<>(); // reverse graph start from endWord
+        Set<String> wordSet = new HashSet<>(wordList); // remove the duplicate words
+        wordSet.remove(beginWord); // remove the first word to avoid cycle path
+        Queue<String> queue = new LinkedList<>(); // store current layer nodes
+        queue.add(beginWord); // first layer has only beginWord
+        Set<String> nextLevel = new HashSet<>(); // store nextLayer nodes
+        boolean findEnd = false; // find endWord flag
+        while (!queue.isEmpty()) { // traverse current layer nodes
+            String word = queue.remove();
+            for (String next : wordSet) {
+                if (isLadder(word, next)) { // is ladder words
+					// construct the reverse graph from endWord
+                    Set<String> reverseLadders = reverse.computeIfAbsent(next, k -> new HashSet<>());
+                    reverseLadders.add(word); 
+                    if (endWord.equals(next)) {
+                        findEnd = true;
+                    }
+                    nextLevel.add(next); // store next layer nodes
                 }
             }
+            if (queue.isEmpty()) { // when current layer is all visited
+                if (findEnd) break; // if find the endWord, then break the while loop
+                queue.addAll(nextLevel); // add next layer nodes to queue
+                wordSet.removeAll(nextLevel); // remove all next layer nodes in wordSet
+                nextLevel.clear();
+            }
         }
-
-        List<String> arl = new ArrayList<>();
-        List<List<String>> ans = new ArrayList<>();
-
-        if (!hm.containsKey(endWord)) return ans;
-
-        dfs(endWord, beginWord, wordList, hm, arl, ans);
-
+        if (!findEnd) return ans; // if can't reach endWord from startWord, then return ans.
+        Set<String> path = new LinkedHashSet<>();
+        path.add(endWord);
+		// traverse reverse graph from endWord to beginWord
+        findPath(endWord, beginWord, reverse, ans, path); 
         return ans;
     }
 
-    public void dfs(String end, String begin, List<String> wordList, HashMap<String, Integer> hm, List<String> arl, List<List<String>> ans) {
-        if (end.equals(begin)) {
-            arl.add(0, begin);
-            List<String> temp = new ArrayList<>(arl);
-            ans.add(temp);
-            arl.remove(0);
-            return;
-        }
 
-        arl.add(0, end);
-        for (String trav : hm.keySet()) {
-            if (hm.get(trav) < hm.get(end) && isDiffOne(end, trav)) dfs(trav, begin, wordList, hm, arl, ans);
+    private void findPath(String endWord, String beginWord, Map<String, Set<String>> graph,
+                                 List<List<String>> ans, Set<String> path) {
+        Set<String> next = graph.get(endWord);
+        if (next == null) return;
+        for (String word : next) {
+            path.add(word);
+            if (beginWord.equals(word)) {
+                List<String> shortestPath = new ArrayList<>(path);
+                Collections.reverse(shortestPath); // reverse words in shortest path
+                ans.add(shortestPath); // add the shortest path to ans.
+            } else {
+                findPath(word, beginWord, graph, ans, path);
+            }
+            path.remove(word);
         }
-        arl.remove(0);
     }
 
-    public boolean isDiffOne(String s1, String s2) {
-        if (s1.equals(s2)) return false;
-
-        int count = 0;
-        for (int i = 0; i < s1.length(); i++) {
-            if (s1.charAt(i) != s2.charAt(i)) count++;
-            if (count >= 2) return false;
+    private boolean isLadder(String s, String t) {
+        if (s.length() != t.length()) return false;
+        int diffCount = 0;
+        int n = s.length();
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) != t.charAt(i)) diffCount++;
+            if (diffCount > 1) return false;
         }
-
-        return count == 1;
-    }
-
-    class Pair {
-        String word;
-        int steps;
-
-        Pair(String word, int steps) {
-            this.word = word;
-            this.steps = steps;
-        }
+        return diffCount == 1;
     }
 }
