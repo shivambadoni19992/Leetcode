@@ -7,7 +7,7 @@ class Solution {
         long totalSum = 0;
         while (end < nums.length) {
             totalSum += nums[end];
-            while (((long)nums[end] * (end - start + 1)) > (totalSum + k)) {
+            while (((long) nums[end] * (end - start + 1)) > (totalSum + k)) {
                 totalSum = totalSum - nums[start];
                 start++;
             }
