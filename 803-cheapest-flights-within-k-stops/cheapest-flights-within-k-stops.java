@@ -1,34 +1,43 @@
 class Solution {
 
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
-        Map<Integer, List<int[]>> dest = new HashMap<>();
+        Map<Integer, List<int[]>> graph = new HashMap<>();
         for (int[] flight : flights) {
-            dest.computeIfAbsent(flight[0], i -> new ArrayList<>()).add(new int[] { flight[1], flight[2] });
+            graph.computeIfAbsent(flight[0], a -> new ArrayList<>())
+                 .add(new int[] { flight[1], flight[2] });
         }
 
-        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
-        pq.offer(new int[] { src, 0, 0 });
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[] { src, 0, 0 });
 
-        int[][] best = new int[n][k + 2];
-        for (int[] row : best) Arrays.fill(row, Integer.MAX_VALUE);
-        best[src][0] = 0;
+        int[] minCostAtNode = new int[n];
+        Arrays.fill(minCostAtNode, Integer.MAX_VALUE);
+        minCostAtNode[src] = 0;
 
-        while (!pq.isEmpty()) {
-            int[] pos = pq.poll();
-            int city = pos[0], cost = pos[1], stops = pos[2];
+        int minCost = Integer.MAX_VALUE;
 
-            if (city == dst) return cost;
+        while (!queue.isEmpty()) {
+            int[] cur = queue.poll();
+            int city = cur[0], cost = cur[1], stops = cur[2];
+
+            if (city == dst) {
+                minCost = Math.min(minCost, cost);
+                continue;
+            }
+
             if (stops > k) continue;
 
-            for (int[] neighbor : dest.getOrDefault(city, new ArrayList<>())) {
-                int nextCity = neighbor[0], nextCost = cost + neighbor[1];
-                if (nextCost < best[nextCity][stops + 1]) {
-                    best[nextCity][stops + 1] = nextCost;
-                    pq.offer(new int[] { nextCity, nextCost, stops + 1 });
+            for (int[] neighbor : graph.getOrDefault(city, new ArrayList<>())) {
+                int nextCity = neighbor[0], price = neighbor[1];
+                int newCost = cost + price;
+
+                if (newCost < minCostAtNode[nextCity]) {
+                    minCostAtNode[nextCity] = newCost;
+                    queue.offer(new int[] { nextCity, newCost, stops + 1 });
                 }
             }
         }
 
-        return -1;
+        return minCost == Integer.MAX_VALUE ? -1 : minCost;
     }
 }
