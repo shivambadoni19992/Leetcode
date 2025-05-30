@@ -40,10 +40,10 @@ class Solution {
             for (int[] dir : direction) {
                 int nx = currX + dir[0];
                 int ny = currY + dir[1];
-                if (!isValid(nx, ny, n, m)) {
+                if(!isValid(nx,ny,n,m)){
                     continue;
                 }
-                int newC = dir[0] == X && dir[1] == Y ? 0 + currC : 1 + currC;
+                int newC = dir[0] == X && dir[1] == Y ? 0 + currC: 1 +currC;
                 if (newC < vis[nx][ny]) {
                     pq.add(new int[] { nx, ny, newC });
                     vis[nx][ny] = newC;
