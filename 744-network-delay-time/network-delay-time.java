@@ -24,7 +24,7 @@ class Solution {
             int cs = curr[0];
             int ct = curr[1];
             if(!visited.contains(cs)) {
-                minTime = Math.max(ct , minTime);
+                minTime = ct;
                 visited.add(cs);
                 if(adj.containsKey(cs)){
                     ArrayList<int[]> destList = adj.get(cs);
