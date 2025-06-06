@@ -14,21 +14,22 @@ class Solution {
             }
             System.out.println(p);
         }
+        if (st.isEmpty() && path !=null) return "/";
 
-        List<String> list = new ArrayList<>();
-        while(!st.isEmpty()){
-            list.add(st.pop());
-        }
-        Collections.reverse(list);
+        // List<String> list = new ArrayList<>();
+        // while(!st.isEmpty()){
+        //     list.add(st.pop());
+        // }
+        // Collections.reverse(list);
         StringBuilder sb = new StringBuilder();
         
-        for(int i = 0;i< list.size();i++){
+        for(String l : st){
             sb.append("/");
-            sb.append(list.get(i));
+            sb.append(l);
             
         }
 
         
-        return list.size()==0 ? "/" : sb.toString();
+        return sb.toString();
     }
 }
