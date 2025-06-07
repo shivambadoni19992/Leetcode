@@ -1,15 +1,20 @@
 class Solution {
-
     public int missingNumber(int[] nums) {
-        int n = nums.length;
-        for (int i = 0; i < n; i++) {
-            int pos = nums[i] == Integer.MIN_VALUE ? 0 : Math.abs(nums[i]);
-            if (pos == n) continue;
-            nums[pos] = nums[pos] == 0 ? Integer.MIN_VALUE : nums[pos] * -1;
+        int ans = 0;
+        //Xor of the array with xor of range 1 to nums
+
+        for(int i = 1;i <= nums.length; i++) {
+            ans = ans ^ i ^ nums[i-1];
         }
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] >= 0) return i;
-        }
-        return n;
+
+        return ans;
+
     }
 }
+
+// arr = 3 0 1
+// i = 1 to n (4)
+
+// xor = 3 ^ 0 ^ 1 
+// xor = 1 ^ 2 ^ 3 ^ 4 ^1 ^0 ^ 3
+// xor = (1 ^1) ^ (3^3) ^(0 ^ 0) ^ 2= 0 ^ 0 ^ 0 ^ 2 => 2;
