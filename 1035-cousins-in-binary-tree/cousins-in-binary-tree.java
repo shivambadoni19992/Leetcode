@@ -14,45 +14,29 @@
  * }
  */
 class Solution {
-
     public boolean isCousins(TreeNode root, int x, int y) {
-        Queue<TreeNode> queue = new LinkedList<>();
-
-        queue.add(root);
-        int levelX = -1, levelY = -1;
-        int level = 0;
-        TreeNode parentX = null, parentY = null;
-        while (!queue.isEmpty()) {
-            int n = queue.size();
-            // For each level
-            for (int i = 0; i < n; i++) {
-                TreeNode node = queue.poll();
-                if (node.left != null) {
-                    queue.add(node.left);
-                    if (node.left.val == x) {
-                        parentX = node;
-                        levelX = level + 1;
-                    }
-                    if (node.left.val == y) {
-                        parentY = node;
-                        levelY = level + 1;
-                    }
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()) {
+            boolean foundA = false;
+            boolean foundB = false;
+            int n = q.size();
+            for(int i = 0;i < n ;i++) {
+                TreeNode curr = q.poll();
+                if(curr.val == x) foundA = true;
+                if(curr.val == y) foundB = true;
+                if(curr.left != null && curr.right != null){
+                    if(curr.left.val == x && curr.right.val == y) return false;
+                    if(curr.left.val == y && curr.right.val == x) return false;
                 }
-                
-                if (node.right != null) {
-                    queue.add(node.right);
-                    if (node.right.val == x) {
-                        parentX = node;
-                        levelX = level + 1;
-                    }
-                    if (node.right.val == y) {
-                        parentY = node;
-                        levelY = level + 1;
-                    }
+                if(foundA && foundB) return true;
+                if(curr.left != null) {
+                    q.add(curr.left);
+                }
+                if(curr.right != null) {
+                    q.add(curr.right);
                 }
             }
-            if (parentX != null && parentY != null) return (levelX == levelY) && (parentX != parentY);
-            level++;
         }
         return false;
     }
