@@ -11,7 +11,7 @@ class Solution {
             int v = edge[1];
             int dist = edge[2];
             distance[u][v] = dist;
-             distance[v][u] = dist;
+            distance[v][u] = dist;
         }
         for(int i = 0;i < n;i++){
             for(int j = 0;j < n; j++){
