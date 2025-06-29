@@ -2,12 +2,7 @@ class Solution {
     public int shortestPathBinaryMatrix(int[][] grid) {
 
         if(grid[0][0] == 1) return -1;
-        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<>(){
-            @Override
-            public int compare(int a[],int b[]) {
-                return a[2] - b[2];
-            }
-        });
+       Queue<int[]> pq = new LinkedList<>();
         pq.offer(new int[]{0,0,1});
         int directions[][] = new int[][]{ {0,1}, {1,0},{0,-1},{-1,0},{1,1},{-1,-1},{-1,1},{1,-1}};
         int n = grid.length;
