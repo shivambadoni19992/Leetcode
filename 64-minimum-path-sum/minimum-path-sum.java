@@ -2,8 +2,6 @@ class Solution {
     public int minPathSum(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
-
-        // Use dp[i][j] to store the min path sum from (i, j) to bottom-right
         int[][] dp = new int[m][n];
         for (int[] row : dp) {
             Arrays.fill(row, -1);
@@ -18,7 +16,6 @@ class Solution {
 
         if (i >= m || j >= n) return Integer.MAX_VALUE;
 
-        // Base case: bottom-right cell
         if (i == m - 1 && j == n - 1) return grid[i][j];
 
         if (dp[i][j] != -1) return dp[i][j];
