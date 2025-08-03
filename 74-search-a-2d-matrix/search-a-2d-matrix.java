@@ -10,7 +10,7 @@ class Solution {
             int row = mid / columns;
             int column = mid % columns;
             int midEle = matrix[row][column];
-            System.out.println(midEle);
+            // System.out.println(midEle);
             if(midEle == target) return true;
             if(midEle < target) {
                 start = mid + 1;
