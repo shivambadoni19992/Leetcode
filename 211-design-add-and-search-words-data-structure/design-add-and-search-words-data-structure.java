@@ -1,49 +1,49 @@
-class Trie {
-    Trie next[] = new Trie[256];
-    String word;
-}
-
 class WordDictionary {
 
-    Trie trie;
+    class Node {
+        Node letter[] = new Node[26];
+        boolean isWord;
+    }
 
+    Node trie;
     public WordDictionary() {
-        trie = new Trie();
+        trie = new Node();
     }
     
     public void addWord(String word) {
-        Trie t = trie;
-        for(char c : word.toCharArray()) {
-            if(t.next[c] == null) {
-                t.next[c] = new Trie();
-            }
-            t = t.next[c];
-        }
-    
-        t.word = word;
         
+        Node itr = trie;
+        for(char ch : word.toCharArray()) {
+            int pos = ch - 'a';
+            if(itr.letter[pos] == null) {
+                itr.letter[pos] = new Node();
+            }
+            itr = itr.letter[pos];
+        }
+        itr.isWord = true;
     }
     
     public boolean search(String word) {
         return dfs(word, 0, trie);
     }
 
-    private boolean dfs(String word, int index, Trie node) {
-        if (node == null) return false;
-        if (index == word.length()) return node.word != null;
+    boolean dfs(String word, int ind, Node trie) {
+        
+        if(trie == null) return false;
+        if(ind == word.length()) return trie.isWord;
+        char ch = word.charAt(ind);
 
-        char c = word.charAt(index);
-
-        if (c == '.') {
-            for (Trie child : node.next) {
-                if (child != null && dfs(word, index + 1, child)) {
+        if(ch == '.') {
+            for(Node t : trie.letter) {
+                if(t != null && dfs(word, ind + 1, t)) {
                     return true;
                 }
             }
             return false;
         } else {
-            return dfs(word, index + 1, node.next[c]);
+            return dfs(word, ind + 1, trie.letter[ch - 'a']);
         }
+    
     }
 }
 
