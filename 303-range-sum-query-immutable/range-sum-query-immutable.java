@@ -1,19 +1,22 @@
 class NumArray {
-    int[] sum;
+    Map<Integer, Integer> prefixSum = new HashMap<>();
 
     public NumArray(int[] nums) {
-        sum = new int[nums.length + 1];
-        int i = 1;
-        for (int num : nums) {
-            sum[i] = sum[i - 1] + num;
-            i++;
+        prefixSum.put(-1, 0);
+        int sum = 0;
+        for(int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            prefixSum.put(i, sum);
         }
     }
-
+    
     public int sumRange(int left, int right) {
-        return sum[right + 1] - sum[left];
+        int start = left - 1;
+        int end = right;
+        return prefixSum.get(end) - prefixSum.get(start);
     }
 }
+
 /**
  * Your NumArray object will be instantiated and called as such:
  * NumArray obj = new NumArray(nums);
