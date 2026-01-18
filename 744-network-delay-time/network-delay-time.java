@@ -31,7 +31,7 @@ class Solution {
             }
             
         }
-        return vis.size() == n ? -1 : -1;
+        return -1;
         
     }
 }
