@@ -1,39 +1,37 @@
 class Solution {
     public int networkDelayTime(int[][] times, int n, int k) {
 
-        Map<Integer, List<int[]>> graph = new HashMap<>();
-        for (int[] time : times) {
-            graph.computeIfAbsent(time[0], x -> new ArrayList<>())
-                 .add(new int[]{time[1], time[2]});
+        Map<Integer, List<int[]>> adj = new HashMap<>();
+
+        for(int[]time : times) {
+            int u = time[0];
+            int v = time[1];
+            int t = time[2];
+            adj.computeIfAbsent(u, m -> new ArrayList<>()).add(new int[] {v, t});
         }
 
-        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<>(){
-            @Override
-            public int compare(int []a,int []b) {
-                return a[1] - b[1];
-            }
-        });
-        pq.offer(new int[]{k, 0});
+        Set<Integer> vis = new HashSet<>();
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]);
 
-        Set<Integer> visited = new HashSet<>();
-        int maxTime = 0;
+        pq.add(new int[]{k, 0});
 
-        while (!pq.isEmpty()) {
-            int[] curr = pq.poll();
-            int node = curr[0], time = curr[1];
+        while(!pq.isEmpty()) {
+            int []curr = pq.poll();
+            int node = curr[0];
+            int time = curr[1];
 
-            if (visited.contains(node)) continue;
-
-            visited.add(node);
-            maxTime = time;
-
-            for (int[] neighbor : graph.getOrDefault(node, new ArrayList<>())) {
-                if (!visited.contains(neighbor[0])) {
-                    pq.offer(new int[]{neighbor[0], time + neighbor[1]});
+            vis.add(node);
+            if(vis.size() == n) return time;
+            if(adj.containsKey(node)) {
+                for(int []edge : adj.get(node)) {
+                    if(!vis.contains(edge[0])) {
+                        pq.add(new int[] {edge[0], edge[1] + time});
+                    }
                 }
             }
+            
         }
-
-        return visited.size() == n ? maxTime : -1;
+        return vis.size() == n ? -1 : -1;
+        
     }
 }
