@@ -1,27 +1,57 @@
 class Solution {
 
-    public int longestConsecutive(int[] nums) {
-        Map<Integer, Integer> map = new HashMap();
-        int count_max = 1;
-        if (nums.length == 0) return 0;
-        for (int i = 0; i < nums.length; i++) {
-            if (map.containsKey(nums[i])) continue;
-            map.put(nums[i], 1);
-
-            if (map.containsKey(nums[i] - 1)) {
-                map.put(nums[i], map.get(nums[i] - 1) + map.get(nums[i]));
+    class DisjointSet {
+        int parent[];
+        int size[];
+        public DisjointSet(int n) {
+            parent = new int[n];
+            size = new int[n];
+            for(int i = 0; i < n; i++) {
+                parent[i] = i;
+                size[i] = 1;
             }
-            if (map.containsKey(nums[i] + 1)) {
-                map.put(nums[i], map.get(nums[i] + 1) + map.get(nums[i]));
-            }
-            if (map.containsKey(nums[i] - 1)) {
-                map.put(nums[i] - map.get(nums[i] - 1), map.get(nums[i]));
-            }
-            if (map.containsKey(nums[i] + 1)) {
-                map.put(nums[i] + map.get(nums[i] + 1), map.get(nums[i]));
-            }
-            count_max = Math.max(count_max, map.get(nums[i]));
         }
-        return count_max;
+
+        int findPar(int u) {
+            if(parent[u] == u) return u;
+            return parent[u] = findPar(parent[u]);
+        }
+        void unionBySize(int u, int v) {
+            int parU = findPar(u);
+            int parV = findPar(v);
+            if(parU == parV) return;
+            if(size[parU] >= size[parV]) {
+                parent[parV] = parU;
+                size[parU] += size[parV];
+            } else {
+                parent[parU] = parV;
+                size[parV] += size[parU];
+            }
+        }
+        int findMax() {
+            int max = 0;
+            for(int i = 0; i < parent.length ; i++) {
+                max = Math.max(size[i], max);
+            }
+            return max;
+        }
+    }
+    public int longestConsecutive(int[] nums) {
+        int n = nums.length;
+        DisjointSet ds = new DisjointSet(n);
+        Map<Integer, Integer> par = new HashMap<>();
+
+        for(int i = 0; i < n; i++) {
+            int num = nums[i];
+            if(par.containsKey(num)) continue;
+            if(par.containsKey(num - 1)) {
+                ds.unionBySize(par.get(num - 1), i);
+            }
+            if(par.containsKey(num + 1)) {
+                ds.unionBySize(par.get(num + 1), i);
+            }
+            par.put(num, i);
+        }
+        return ds.findMax();
     }
 }
