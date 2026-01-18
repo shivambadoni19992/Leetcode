@@ -1,41 +1,39 @@
 class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        int n = numCourses;
-        List<Integer>[] adj = new List[n];
-        int[] indegree = new int[n];
-        List<Integer> ans = new ArrayList<>();
+       Map<Integer, List<Integer>> adj = new HashMap<>();
+        int inDegree[] = new int[numCourses];
+        for(int []pre : prerequisites) {
+            int course1 = pre[0];
+            int course2 = pre[1];
+            adj.computeIfAbsent(course2, k -> new ArrayList<>()).add(course1);
+            inDegree[course1]++;
+        } 
+        List<Integer> completedCourse = new ArrayList<>();
+        Queue<Integer> q = new LinkedList<>();
 
-        for (int[] pair : prerequisites) {
-            int course = pair[0];
-            int prerequisite = pair[1];
-            if (adj[prerequisite] == null) {
-                adj[prerequisite] = new ArrayList<>();
-            }
-            adj[prerequisite].add(course);
-            indegree[course]++;
-        }
-
-        Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < n; i++) {
-            if (indegree[i] == 0) {
-                queue.offer(i);
+        for(int i = 0; i < numCourses; i++) {
+            if(inDegree[i] == 0) {
+                q.add(i);
             }
         }
 
-        while (!queue.isEmpty()) {
-            int current = queue.poll();
-            ans.add(current);
+        while(!q.isEmpty()) {
+            int curr = q.poll();
 
-            if (adj[current] != null) {
-                for (int next : adj[current]) {
-                    indegree[next]--;
-                    if (indegree[next] == 0) {
-                        queue.offer(next);
+            completedCourse.add(curr);
+
+            if(adj.containsKey(curr)) {
+
+                for(int course : adj.get(curr)) {
+                    inDegree[course]--;
+                    if(inDegree[course] == 0) {
+                        q.add(course);
                     }
                 }
             }
         }
-        if(ans.size() != n) return new int[0];
-        return ans.stream().mapToInt(i -> i).toArray();
+        if(completedCourse.size() != numCourses) return new int[] {};
+        return completedCourse.stream().mapToInt(i -> i).toArray();
+
     }
 }
