@@ -19,14 +19,13 @@ class Solution {
         if (j == pattern.length()) {
             ans = i == text.length();
         } else {
-            boolean first_match =
-                (i < text.length() &&
+            boolean first_match = (i < text.length() &&
                     (pattern.charAt(j) == text.charAt(i) ||
-                        pattern.charAt(j) == '.'));
+                            pattern.charAt(j) == '.'));
 
             if (j + 1 < pattern.length() && pattern.charAt(j + 1) == '*') {
                 ans = (dp(i, j + 2, text, pattern) ||
-                    (first_match && dp(i + 1, j, text, pattern)));
+                        (first_match && dp(i + 1, j, text, pattern)));
             } else {
                 ans = first_match && dp(i + 1, j + 1, text, pattern);
             }
