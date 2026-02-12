@@ -1,9 +1,14 @@
 class Solution {
+    int sum=0;
     public int subsetXORSum(int[] nums) {
-        int result = 0;
-        for (int num : nums) {
-            result |= num;
+        sum=0;
+        return getAns(nums,0,0);
+    }
+    
+    int getAns(int[] arr,int i,int cur){
+        if(i==arr.length){
+            return cur;
         }
-        return result << (nums.length - 1);
+        return getAns(arr,i+1,cur^arr[i]) + getAns(arr,i+1,cur);
     }
 }
