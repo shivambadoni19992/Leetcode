@@ -10,20 +10,20 @@
  */
 class Solution {
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-        ListNode ans = new ListNode(-1);
-        ListNode temp = ans;
-        while (list1 != null && list2 != null) {
-            if (list1.val < list2.val) {
-                temp.next = list1;
-                temp = temp.next;
+        ListNode temp = new ListNode(-1);
+        ListNode itr = temp;
+        while(list1 != null && list2 != null) {
+            if(list1.val < list2.val) {
+                itr.next = list1;
                 list1 = list1.next;
             } else {
-                temp.next = list2;
-                temp = temp.next;
+                itr.next = list2;
                 list2 = list2.next;
             }
+            itr = itr.next;
         }
-        temp.next = (list1 == null) ? list2 : list1;
-        return ans.next;
+
+        itr.next = (list1 == null) ? list2 : list1;
+        return temp.next;
     }
 }
