@@ -1,27 +1,34 @@
 class Solution {
-    public int maxPoints(int[][] points) 
-    {
-        int max = 0;
-        for(int[] point_1 : points)
-        {
-            Map<Double,Integer> map= new HashMap<>();
-            for(int[] point_2 : points)
-            {
-                if(point_1 == point_2) continue;
-                
-                double slope=0;
-                if(point_2[0] == point_1[0])
-                   slope=Double.POSITIVE_INFINITY; 
-                else
-                {
+    public int maxPoints(int[][] points) {
 
-                    slope = (point_2[1] - point_1[1]) / (double)(point_2[0] - point_1[0]);
+        
+        int maxPoints = 0;
+        
+        for(int i = 0; i < points.length; i++) {
+            float x1 = points[i][0];
+            float y1 = points[i][1];
+            int inf = 0;
+            Map<Float, Integer> map = new HashMap<>();
+            for(int j = 0; j < points.length; j++) {
+                if(i == j) continue;
+                float x2 = points[j][0];
+                float y2 = points[j][1];
+
+                if(x1 == x2) {
+                    inf++;
+                    maxPoints = Math.max(inf, maxPoints);
+                    continue;
                 }
-                map.put( slope , map.getOrDefault(slope,0)+1 );
-                if(map.get(slope)>max)
-                    max=map.get(slope);
+
+                float slope = (y2 - y1) / (float) (x2 - x1);
+                
+                map.put(slope, map.getOrDefault(slope, 0) + 1);
+                maxPoints = Math.max(maxPoints, map.get(slope));
             }
+
         }
-        return max+1;
+
+        return maxPoints + 1;
+        
     }
 }
