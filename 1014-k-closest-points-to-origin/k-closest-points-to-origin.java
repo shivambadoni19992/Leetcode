@@ -11,15 +11,7 @@ class Pair {
 class Solution {
 
     public int[][] kClosest(int[][] points, int k) {
-        PriorityQueue<Pair> pq = new PriorityQueue<>(
-            new Comparator<Pair>() {
-
-                @Override
-                public int compare(Pair a, Pair b) {
-                    return Double.compare(b.dist, a.dist);
-                }
-            }
-        );
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> Double.compare(b.dist, a.dist));
         for (int point[] : points) {
             double dist = Math.sqrt((point[0] * point[0]) + (point[1] * point[1]));
             pq.add(new Pair(dist, point));
