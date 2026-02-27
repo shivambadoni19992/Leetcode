@@ -1,4 +1,5 @@
 class TrieNode {
+
     boolean isEnd;
     TrieNode[] children;
 
@@ -9,6 +10,7 @@ class TrieNode {
 }
 
 class Trie {
+
     TrieNode root;
 
     Trie() {
@@ -55,7 +57,9 @@ class Solution {
                     if (endIdx == s.length() - 1) {
                         validSentences.add(currentWord);
                     } else {
-                        List<String> sentencesFromNextIndex = dp.get(endIdx + 1);
+                        List<String> sentencesFromNextIndex = dp.get(
+                            endIdx + 1
+                        );
                         for (String sentence : sentencesFromNextIndex) {
                             validSentences.add(currentWord + " " + sentence);
                         }
