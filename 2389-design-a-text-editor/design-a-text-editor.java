@@ -70,7 +70,7 @@ class TextEditor {
             curr = curr.prev;
             count++;
         }
-        Collections.reverse(text); // Reverse the list in Java
+        Collections.reverse(text);
         StringBuilder sb = new StringBuilder();
         for (char ch : text) {
             sb.append(ch);
