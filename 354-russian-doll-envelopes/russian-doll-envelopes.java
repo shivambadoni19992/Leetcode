@@ -16,15 +16,34 @@ class Solution {
 
             int h = e[1];
 
-            int pos = Arrays.binarySearch(lis, 0, size, h);
-
-            if (pos < 0) pos = -(pos + 1);
+            int pos = binarySearch(lis, 0, size - 1, h);
 
             lis[pos] = h;
 
-            if (pos == size) size++;
+            if (pos == size) {
+                size++;
+            }
         }
 
         return size;
+    }
+
+    int binarySearch(int[] arr, int left, int right, int target) {
+
+        int ans = right + 1;
+
+        while (left <= right) {
+
+            int mid = left + (right - left) / 2;
+
+            if (arr[mid] >= target) {
+                ans = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        return ans;
     }
 }
