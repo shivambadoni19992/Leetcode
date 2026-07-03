@@ -16,10 +16,11 @@ class Solution {
                         int a[] = q.poll();
                         int first = a[0];
                         int second = a[1];
-                        for (int[] dir : directions) {
+                         for (int[] dir : directions) {
                             int newRow = first + dir[0];
                             int newCol = second + dir[1];
-                            if (newRow >= 0 && newRow < n && newCol >= 0 && newCol < m && grid[newRow][newCol] == '1') {
+                            if (newRow >= 0 && newRow < n && newCol >= 0 && newCol < m
+                                    && grid[newRow][newCol] == '1') {
                                 q.add(new int[] { newRow, newCol });
                                 grid[newRow][newCol] = '0';
                             }
