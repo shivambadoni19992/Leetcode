@@ -1,25 +1,27 @@
 class Solution {
 
-    int helper(int ind, int coins[], int amount, int dp[][]) {
+    int helper(int i, int a, int coins[], int dp[][]) {
+        if(a == 0 && coins.length == i) return 0;
+        if(a < 0 || coins.length == i) return Integer.MAX_VALUE - 1;
 
-        if(amount == 0 && ind == coins.length) return 0;
-        if(amount < 0 || ind == coins.length) return Integer.MAX_VALUE - 1;
+        if(dp[i][a] != -1) return dp[i][a];
 
-        if(dp[ind][amount] != -1) return dp[ind][amount];
-        int take = 1 + helper(ind, coins, amount - coins[ind], dp);
-        int notTake =  helper(ind + 1, coins, amount, dp);
-        return dp[ind][amount] = Math.min(take, notTake); 
+        int take = 1 + helper(i, a - coins[i], coins, dp);
+        int notTake = helper(i + 1, a, coins, dp);
 
+        return dp[i][a] = Math.min(take, notTake);
     }
-    public int coinChange(int[] coins, int amount) {
-        int n = coins.length;
-        int dp[][] = new int[n][amount + 1];
 
-        for(int i = 0; i < n; i++) {
+    public int coinChange(int[] coins, int amount) {
+
+        int dp[][] = new int[coins.length][amount + 1];
+
+        for(int i = 0; i < coins.length; i++) {
             Arrays.fill(dp[i], -1);
         }
-        int totalCoins =  helper(0, coins, amount, dp);
-        return totalCoins == Integer.MAX_VALUE - 1 ? -1 : totalCoins;
+        int value = helper(0, amount, coins, dp);
+        return value >= Integer.MAX_VALUE - 1  ? -1 : value;
+
         
     }
 }
